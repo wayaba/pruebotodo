@@ -20,14 +20,14 @@ repositories {
   // Spock development snapshots are available from Spock's Maven repo
   maven { url "http://m2repo.spockframework.org/snapshots" }
 }
-
+/*
 task callspock << {
 	MyFirstSpec  g = new MyFirstSpec()
 	g.hola()
     //println "sampleOld -> ${project.hasProperty('sampleOld') ? project.property('sampleOld') : 'default value for sampleOld'}"
     //println "sampleNew -> ${project.findProperty('sampleNew') ?: 'default value for sampleNew'}"
 }
-
+*/
 dependencies {
   // mandatory dependencies for using Spock
   compile "org.codehaus.groovy:groovy-all:2.4.15"

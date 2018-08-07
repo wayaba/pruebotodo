@@ -100,9 +100,9 @@ pipeline {
 			
 				steps{
 						echo 'Ejecuto la validacion de SPOCK'
-						//sh 'gradle clean test'
+						sh 'gradle clean test'
 						//sh 'gradle resolveProperties'
-						sh 'gradle -q callspock'
+						//sh 'gradle -q callspock'
 					}
 			
 				
