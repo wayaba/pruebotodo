@@ -94,20 +94,20 @@ pipeline {
 				sh "docker run -e LICENSE=accept -d -p ${properties.'API.manageport'}:7600 -p ${properties.'API.port'}:7800 -P --name app-running image-temp"
 			}
 		}
-		/*
+		
 		stage('Test')
 			{
 			
 				steps{
 						echo 'Ejecuto la validacion de SPOCK'
 						//sh 'gradle clean test'
-						sh 'gradle resolveProperties'
-						
+						//sh 'gradle resolveProperties'
+						sh 'gradle -q callspock'
 					}
 			
 				
 			}
-		*/	
+			
 		stage('Tag image')
 			{
 				steps{

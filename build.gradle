@@ -21,9 +21,11 @@ repositories {
   maven { url "http://m2repo.spockframework.org/snapshots" }
 }
 
-task resolveProperties << {
-    println "sampleOld -> ${project.hasProperty('sampleOld') ? project.property('sampleOld') : 'default value for sampleOld'}"
-    println "sampleNew -> ${project.findProperty('sampleNew') ?: 'default value for sampleNew'}"
+task callspock << {
+	MyFirstSpec  g = new MyFirstSpec()
+	g.hola()
+    //println "sampleOld -> ${project.hasProperty('sampleOld') ? project.property('sampleOld') : 'default value for sampleOld'}"
+    //println "sampleNew -> ${project.findProperty('sampleNew') ?: 'default value for sampleNew'}"
 }
 
 dependencies {
