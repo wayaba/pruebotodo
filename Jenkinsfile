@@ -33,7 +33,6 @@ pipeline {
     }
 
 	stages {
-/*	
 		stage('SonarQube analysis') {
 			steps {
 				script {
@@ -48,9 +47,7 @@ pipeline {
 					}
 				}
 			}
-		}
-*/		
-		
+		}		
 		stage('Compilacion')
 		{
 			agent {
@@ -64,64 +61,39 @@ pipeline {
 				}
 					
 		}
-			/*
-		stage('Load Env Parameters')
+		stage('Build Image')
 		{
 			steps{
+				echo "Cargo propiedades"
 				script{
 					loadProperties(params.environment)
 				}
-			}
-		}
-		*/
-		//stage('Replaces')
-		stage('Build Image')
-			{
-				steps{
-					echo "Cargo propiedades"
-					script{
-						loadProperties(params.environment)
-					}
+				
+				echo "Realizo replace en odbc.ini"
 					
-					echo "Realizo replace en odbc.ini"
-						
-					sh "cat ${params.workspacesdir}/${params.appname}/connections/odbc.ini | \
-						sed -e 's,#SQLLOCAL.port#,${properties.'SQLLOCAL.port'},' \
-							-e 's,#SQLLOCAL.database#,${properties.'SQLLOCAL.database'},' \
-							-e 's,#SQLLOCAL.hostname#,${properties.'SQLLOCAL.hostname'},' \
-							-e 's,#SQLLOCAL.installdir#,${params.mqsihome},' \
-						> /tmp/odbc.ini"
-					
-					sh "cp /tmp/odbc.ini ${params.workspacesdir}"
-					
-					echo "Hago el build"
-					sh "docker build -t ace-mascotas --build-arg dbname=${properties.'SQLLOCAL.dbname'} --build-arg dbuser=${properties.'SQLLOCAL.dbuser'} --build-arg dbpass=${properties.'SQLLOCAL.dbpass'} ."
-					
-					//borro odbc.ini del workspace y del tmp
-					sh "rm /tmp/odbc.ini"
-					sh "rm ${params.workspacesdir}/odbc.ini"
-				}
-			}
-			/*
-		stage('Build Image')
-		{
-			steps{
-				sh "docker build -t ace-mascotas --build-arg dbname=${properties.'SQLLOCAL.dbname'} --build-arg dbuser=${properties.'SQLLOCAL.dbuser'} --build-arg dbpass=${properties.'SQLLOCAL.dbpass'} ."
+				sh "cat ${params.workspacesdir}/${params.appname}/connections/odbc.ini | \
+					sed -e 's,#SQLLOCAL.port#,${properties.'SQLLOCAL.port'},' \
+						-e 's,#SQLLOCAL.database#,${properties.'SQLLOCAL.database'},' \
+						-e 's,#SQLLOCAL.hostname#,${properties.'SQLLOCAL.hostname'},' \
+						-e 's,#SQLLOCAL.installdir#,${params.mqsihome},' \
+					> /tmp/odbc.ini"
+				
+				sh "cp /tmp/odbc.ini ${params.workspacesdir}"
+				
+				echo "Hago el build"
+				sh "docker build -t image-temp --build-arg dbname=${properties.'SQLLOCAL.dbname'} --build-arg dbuser=${properties.'SQLLOCAL.dbuser'} --build-arg dbpass=${properties.'SQLLOCAL.dbpass'} ."
 				
 				//borro odbc.ini del workspace y del tmp
 				sh "rm /tmp/odbc.ini"
 				sh "rm ${params.workspacesdir}/odbc.ini"
-				
 			}
 		}
-		*/
 		stage('Run Image')
 		{
 			steps{
-				sh "docker run -e LICENSE=accept -d -p ${properties.'API.manageport'}:7600 -p ${properties.'API.port'}:7800 -P --name probando3 ace-mascotas"
+				sh "docker run -e LICENSE=accept -d -p ${properties.'API.manageport'}:7600 -p ${properties.'API.port'}:7800 -P --name app-running image-temp"
 			}
 		}
-		
 		/*
 		stage('Test')
 			{
@@ -142,7 +114,7 @@ pipeline {
 				
 					script{
 						CONTAINER_ID = sh (
-							script: 'docker ps -aqf "name=probando3"',
+							script: 'docker ps -aqf "name=app-running"',
 							returnStdout: true
 						).trim()
 						echo "El id del container es: ${CONTAINER_ID}"
@@ -151,12 +123,12 @@ pipeline {
 						sh "docker commit ${CONTAINER_ID} elrepo/ace-mascotas:${VERSION}"
 						
 						echo 'Stoppeo la instancia'
-						sh 'docker stop probando3'
+						sh 'docker stop app-running'
 						echo 'Stoppeo la instancia'
-						sh 'docker rm probando3'
+						sh 'docker rm app-running'
 		
 						//Borro la imagen
-						sh (script: 'docker rmi ace-mascotas')
+						sh (script: 'docker rmi image-temp')
 					}	
 				}
 			}
