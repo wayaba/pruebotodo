@@ -91,7 +91,7 @@ pipeline {
 		stage('Run Image')
 		{
 			steps{
-			
+				//antes del run verifico si no existe el container 
 				script{
 						CONTAINER_ID = sh (
 							script: 'docker ps -aqf "name=app-running"',
