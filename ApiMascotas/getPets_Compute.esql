@@ -1,0 +1,27 @@
+
+
+CREATE COMPUTE MODULE getPets_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE refOut REFERENCE TO OutputRoot.JSON.Data;
+		DECLARE refOutPet REFERENCE TO refOut.Pet;
+		
+		DECLARE query CHARACTER 'SELECT * FROM dbo.Mascota';
+		SET Environment.ResultSet[] = PASSTHRU(query);
+		
+		DECLARE cantReg INTEGER CARDINALITY(Environment.ResultSet[]);
+		DECLARE index INTEGER 1;
+		WHILE (index <= cantReg) DO
+			SET refOutPet.Row[index].id = Environment.ResultSet[index].Id;
+			SET refOutPet.Row[index].nombre = Environment.ResultSet[index].Nombre;
+			SET refOutPet.Row[index].raza = Environment.ResultSet[index].Raza;
+			SET index = index +1;
+		END WHILE;
+		
+		RETURN TRUE;
+	END;
+
+	
+END MODULE;

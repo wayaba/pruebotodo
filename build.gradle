@@ -1,0 +1,40 @@
+apply plugin: 'groovy'
+
+version = "1.0"
+description = "Spock Framework - Example Project"
+
+// Spock works with Java 1.6 and above
+sourceCompatibility = 1.6
+
+sourceSets {
+    test {
+        groovy {
+            srcDirs= ['ApiMascotas/test/groovy']
+        }
+    }
+}
+
+repositories {
+  // Spock releases are available from Maven Central
+  mavenCentral()
+  // Spock development snapshots are available from Spock's Maven repo
+  maven { url "http://m2repo.spockframework.org/snapshots" }
+}
+
+task resolveProperties << {
+    println "sampleOld -> ${project.hasProperty('sampleOld') ? project.property('sampleOld') : 'default value for sampleOld'}"
+    println "sampleNew -> ${project.findProperty('sampleNew') ?: 'default value for sampleNew'}"
+}
+
+dependencies {
+  // mandatory dependencies for using Spock
+  compile "org.codehaus.groovy:groovy-all:2.4.15"
+  compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
+  
+  testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
+
+  // optional dependencies for using Spock
+  testCompile "org.hamcrest:hamcrest-core:1.3" // only necessary if Hamcrest matchers are used
+  testRuntime "net.bytebuddy:byte-buddy:1.6.5"          // allows mocking of classes (in addition to interfaces)
+  testRuntime "org.objenesis:objenesis:2.5.1"    // allows mocking of classes without default constructor (together with CGLIB)
+}

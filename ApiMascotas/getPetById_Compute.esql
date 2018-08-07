@@ -1,0 +1,39 @@
+
+
+CREATE COMPUTE MODULE getPetById_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+
+		DECLARE refQueryString REFERENCE TO InputLocalEnvironment.HTTP.Input.QueryString;
+		
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE refOut REFERENCE TO OutputRoot.JSON.Data;
+		DECLARE refOutPet REFERENCE TO refOut.Pet;
+		
+		DECLARE query CHARACTER 'SELECT * FROM dbo.Mascota where Id = ?';
+		
+		
+		SET Environment.ResultSet[] = PASSTHRU(query VALUES(refQueryString.petId));
+		
+		DECLARE cantReg INTEGER CARDINALITY(Environment.ResultSet[]);
+		DECLARE filter REFERENCE TO InputLocalEnvironment.HTTP.Data.petId;
+		DECLARE index INTEGER 1;
+		WHILE (index <= cantReg) DO
+			SET refOutPet.Row[index].id = Environment.ResultSet[index].Id;
+			SET refOutPet.Row[index].nombre = Environment.ResultSet[index].Nombre;
+			SET refOutPet.Row[index].raza = Environment.ResultSet[index].Raza;
+			SET index = index +1;
+		END WHILE;
+		
+--		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data;
+--		SET outRef.id = 1;
+--		SET outRef.nombre = 'Firulais';
+--		SET outRef.raza = 'Callejro';
+		
+		RETURN TRUE;
+	END;
+
+	
+END MODULE;
