@@ -26,7 +26,7 @@ pipeline {
 	
 	parameters {
         string(name: 'mqsihome', defaultValue: '/opt/ibm/ace-11.0.0.0', description: '')
-		string(name: 'workspacesdir', defaultValue: '/var/jenkins_home/workspace/imagenconbar', description: '')
+		string(name: 'workspacesdir', defaultValue: '/var/jenkins_home/workspace/pruebotodo', description: '')
 		string(name: 'appname', defaultValue: 'ApiMascotas', description: '')
 		string(name: 'version', defaultValue: '9999', description: '1.0')
 		choice(name: 'environment', choices: "desa\ntest\nprod", description: 'selecciona el ambiente' )
