@@ -356,6 +356,19 @@ RUN bash -c 'mqsisetdbparms -w /home/aceuser/ace-server -n $dbname -u $dbuser -p
 ```
 ### <a name="runimage"></a>Stage Run Image :runner:
 
+Antes de ejecutar el run se realiza una validación para ver si existe previamente un container con ese mismo nombre. En el caso de existir se stoppea y se elimina
+
+```Groovy
+script{
+	CONTAINER_ID = sh (script: 'docker ps -aqf "name=app-running"',
+			returnStdout: true).trim()	
+	if ( CONTAINER_ID ) {
+		sh 'docker stop app-running'
+		echo 'Stoppeo la instancia'
+		sh 'docker rm app-running'
+	}
+}	
+```
 Es este momento se levanta una instancia de la imagen previamente generada.
 
 ```Groovy
