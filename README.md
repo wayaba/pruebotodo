@@ -406,7 +406,7 @@ El mismo contiene las dependencias necesarias para poder ejecutar el codigo en e
 ```
 
 > Un detalle a tener en cuenta es la ruta de donde se aloja el archivo groovy.
-> Si no esta en el root, se debe especificar la misma a traves del siguiente código en el *build.gradle*
+> Si no esta en el root/src/test/groovy/, se debe especificar la misma a traves del siguiente código en el *build.gradle*
 
 ```Groovy
 sourceSets {
