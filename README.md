@@ -10,10 +10,10 @@
 - [SonarQube](#sonarqube)
   * [Configuración](#configsonar)
   * [Configuración en Jenkins](#sonarjenkins)
-	* [Jenkins y server de SonarQube](#sonarjenkins1)
-	* [Plugin SonarQube](#sonarjenkins2)
-  * [Generación nuevo item en Jenkins](#newitem)
-  * [Codificación de Jenkinsfile con pipeline](#pipeline)
+	* [Plugin SonarQube](#sonarjenkins1)
+	* [Jenkins y server de SonarQube](#sonarjenkins2)
+- [Generación nuevo item en Jenkins](#newitem)
+- [Codificación de Jenkinsfile con pipeline](#pipeline)
   * [Parámetros](#parametros)
   * [Stage SonarQube](#stagesonarqube)
   * [Stage Compilación](#stagecompilacion)
@@ -83,7 +83,6 @@ Token generado: 31ee76df78c1475c4b347aa0db46498a987c28ed
 #### <a name="sonarjenkins1">Configuración de plugin SonarQube
 
 Dentro de Manage Jenikins->Manage Plugins, buscar e instalar el plugin ["SonarQube Scanner"](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins)
-
 
 Una vez hecho esto, dentro de Manage Jenkins->Global Tool Configuration
 En la seccion SonarQube Scanner agregar un SonarQube Scanner presionando el boton de Add
