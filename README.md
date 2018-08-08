@@ -26,7 +26,7 @@
   * [Stage Testing](#stagetesting)
     * [Referencias para ejecutar SPOCK](#referenciasspock)
   * [Stage Tag](#stagetag)
-- [About](#about)
+- [Acerca de](#about)
  
 ## Prerrequisitos
 
@@ -486,6 +486,12 @@ Con ese id, se genera el tagueo de la versión realizando un *commit*
 Una vez tagueado se stoppea la instancia y se borra la misma.
 
 Por último se borra la imagen temporal generada en el paso del [build](#buildimagen)
+
+## <a name="about"></a>Acerca de
+
+
+### Autor
+** Pablo Pedraza**
 
 [ButlerImage]: https://jenkins.io/sites/default/files/jenkins_logo.png
 [website]: https://jenkins.io/
