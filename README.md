@@ -491,7 +491,7 @@ Por último se borra la imagen temporal generada en el paso del [build](#buildim
 
 
 ### Autor
-** Pablo Pedraza**
+**Pablo Pedraza**
 
 [ButlerImage]: https://jenkins.io/sites/default/files/jenkins_logo.png
 [website]: https://jenkins.io/
