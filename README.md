@@ -53,7 +53,7 @@ docker cp "C:\tmp\esql-plugin-2.3.3.jar" sonarqube:/opt/sonarqube/extensions/plu
 ```
 ## <a name="sonarqube"></a>SonarQube :feet:
 
-#### <a name="configsonar"></a>Configuración
+### <a name="configsonar"></a>Configuración
 En SonarQube crear un nuevo proyecto
 Administration->Projects->Management->Create Project
 
@@ -78,7 +78,7 @@ En Generate Tokens ingresar la key del proyeto creado anteriormente "projSonarDo
 ```
 Token generado: 31ee76df78c1475c4b347aa0db46498a987c28ed
 ```
-#### <a name="sonarjenkins"></a>Configuración en Jenkins
+### <a name="sonarjenkins"></a>Configuración en Jenkins
 
 	### <a name="sonarjenkins1">Configuración de plugin SonarQube
 
