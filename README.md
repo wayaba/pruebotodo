@@ -248,7 +248,7 @@ SQLLOCAL.port=1433
 SQLLOCAL.dbname=SQLLOCAL
 ```
 
-### <a name="leeproperties"></a>Lectura de archivos de properties
+#### <a name="leeproperties"></a>Lectura de archivos de properties
 
 Para la lectura de los archivos de properties dentro del Jenkinsfile es necesario instalar un el plugin [Pipeline Utility Steps](https://wiki.jenkins.io/display/JENKINS/Pipeline+Utility+Steps+Plugin) dentro de Jenkins
 
@@ -290,7 +290,7 @@ Una vez invocada la función, a forma de referenciar las propiedades es la sigui
 ${properties.'SQLLOCAL.port'}
 ```
 
-### <a name="odbcini"></a>Modificacion odbc.ini
+#### <a name="odbcini"></a>Modificacion odbc.ini
 
 Para la configuración de las conexiones es necesario modificar el odbc.ini de la imagen a generar.
 Para esto, cada proyecto debe contener dentro de la carpeta connections un odbc.ini preparado para realizar replace de las conexiones a utilizar
@@ -341,7 +341,7 @@ sh "cat ${params.workspacesdir}/${params.appname}/connections/odbc.ini | \
 sh "cp /tmp/odbc.ini ${params.workspacesdir}"
 ```
 
-### <a name="buildimagen"></a>Build de la imagen
+#### <a name="buildimagen"></a>Build de la imagen
 
 El build se realiza desde el mismo pipeline invocando al DockerFile contenido en el mismo root del proyecto
 
@@ -358,7 +358,7 @@ Luego del build se limpian los archivos temporales
 sh "rm /tmp/odbc.ini"
 sh "rm ${params.workspacesdir}/odbc.ini"
 ```
-### <a name="dockerfile">Dockerfile
+#### <a name="dockerfile">Dockerfile
 El Dockerfile es sobre el que se realiza el build.
 En el mismo se indica que la contrucción de la imagen se realiza en base a la imagen [ppedraza/ace](https://hub.docker.com/r/ppedraza/ace/)
 
