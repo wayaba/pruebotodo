@@ -442,7 +442,7 @@ steps{
 }
 ```
 
-### <a name="referenciasspock"></a>Referencias para ejecutar SPOCK
+#### <a name="referenciasspock"></a>Referencias para ejecutar SPOCK
 
 Es importante que dentro del root exista el archivo *build.gradle*
 El mismo contiene las dependencias necesarias para poder ejecutar el codigo en el archivo .groovy que contiene las validaciones.
