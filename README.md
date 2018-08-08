@@ -209,7 +209,7 @@ A este comando se le pasan los siguientes parametros
 - -a : nombre del bar (el nombre es lo de menos, lo importante es la ruta donde se va a crear. En este caso en el workspace)
 - -k : el nombre de la aplicación a compilar dentro del workspace
 
-Ejemplo
+Ejemplo:
 ```Groovy
 stage('Compilación')
 {
@@ -232,7 +232,7 @@ Lo primero que se debe hacer en este step es la carga de las variables de entorn
 
 Para esto deben existir archivos de propiedades por ambiente.
 Los mismos estan actualmente situados en el root del proyecto
-Ej.
+Ejemplo:
 
 - desa.properties
 - test.properties
