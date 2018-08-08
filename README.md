@@ -24,6 +24,7 @@
 	* [Dockerfile](#dockerfile)
   * [Stage Run Image](#stagerun)
   * [Stage Testing](#stagetesting)
+	* [Instalacion Gradle en Jenkins](#referenciagradle)
     * [Referencias para ejecutar SPOCK](#referenciasspock)
   * [Stage Tag](#stagetag)
 - [Acerca de](#about)
@@ -425,6 +426,16 @@ steps{
 En este stage se corren test programados en SPOKE para corroborar el correcto funcionamiento de la imagen.
 
 Para poder correr un test con el framework Spock, es necesario la ejecución de Gradle
+
+#### <a name="referenciagradle"></a>Instalacion Gradle en Jenkins
+
+Para utilizar Gradle en Jenkins primero hay que instalarlo dentro de 
+Manage Jenkins-> Global Tool Configuration -> Gradle
+
+```
+ Name : gradle-jenkins
+```
+- [x] Install automatically
 
 Dentro del Jenkinsfile en la seccion del pipeline se debe invocar la referencia a la herramienta
 
