@@ -3,6 +3,27 @@
 
  - Integración continua manejada con pipeline de Jenkins.
 
+ 
+## Tabla de contenidos
+
+- [Prerrequisitos](#prerrequisitos)
+- [Pasos](#pasos)
+  * [Configuración de Sonarqube](#configsonar)
+  * [Configuración Sonarqube en Jenkins](#sonarjenkins)
+	* [Jenkins y server de SonarQube](#sonarjenkins1)
+	* [Plugin SonarQube](#sonarjenkins2)
+  * [Generación nuevo item en Jenkins](#generacion-nuevo-item-en-jenkins)
+  * [Utility functions](#utility-functions)
+- [Options](#options)
+  * [options.append](#optionsappend)
+  * [options.filter](#optionsfilter)
+  * [options.slugify](#optionsslugify)
+  * [options.bullets](#optionsbullets)
+  * [options.maxdepth](#optionsmaxdepth)
+  * [options.firsth1](#optionsfirsth1)
+  * [options.stripHeadingTags](#optionsstripheadingtags)
+- [About](#about)
+ 
 ## Prerrequisitos
 
 * Jenkins debe tener instalado docker.
@@ -26,7 +47,7 @@ Una vez que sonarqube este running, pegar el jar [(esql-plugin-2.3.3.jar)](https
 ```
 docker cp "C:\tmp\esql-plugin-2.3.3.jar" sonarqube:/opt/sonarqube/extensions/plugins
 ```
-## Pasos :feet:
+# Pasos :feet:
 
 ## <a name="configsonar"></a>Configuración de Sonarqube
 En SonarQube crear un nuevo proyecto
