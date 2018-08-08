@@ -12,16 +12,20 @@
   * [Configuración Sonarqube en Jenkins](#sonarjenkins)
 	* [Jenkins y server de SonarQube](#sonarjenkins1)
 	* [Plugin SonarQube](#sonarjenkins2)
-  * [Generación nuevo item en Jenkins](#generacion-nuevo-item-en-jenkins)
-  * [Utility functions](#utility-functions)
-- [Options](#options)
-  * [options.append](#optionsappend)
-  * [options.filter](#optionsfilter)
-  * [options.slugify](#optionsslugify)
-  * [options.bullets](#optionsbullets)
-  * [options.maxdepth](#optionsmaxdepth)
-  * [options.firsth1](#optionsfirsth1)
-  * [options.stripHeadingTags](#optionsstripheadingtags)
+  * [Generación nuevo item en Jenkins](#newitem)
+  * [Codificación de Jenkinsfile con pipeline](#pipeline)
+  * [Parámetros](#parametros)
+  * [Stage SonarQube](#stagesonarqube)
+  * [Stage Compilación](#stagecompilacion)
+  * [Stage Build Image](#stagebuild)
+	* [Lectura de archivos de properties](#leeproperties)
+	* [Modificacion odbc.ini](#odbcini)
+	* [Build de la imagen](#buildimagen)
+	* [Dockerfile](#dockerfile)
+  * [Stage Run Image](#stagerun)
+  * [Stage Testing](#stagetesting)
+    * [Referencias para ejecutar SPOCK](#referenciasspock)
+  * [Stage Tag](#stagetag)
 - [About](#about)
  
 ## Prerrequisitos
@@ -47,7 +51,7 @@ Una vez que sonarqube este running, pegar el jar [(esql-plugin-2.3.3.jar)](https
 ```
 docker cp "C:\tmp\esql-plugin-2.3.3.jar" sonarqube:/opt/sonarqube/extensions/plugins
 ```
-# Pasos :feet:
+# <a name="pasos"></a>Pasos :feet:
 
 ## <a name="configsonar"></a>Configuración de Sonarqube
 En SonarQube crear un nuevo proyecto
@@ -105,7 +109,7 @@ Dentro de Manage Jenkins->Configure System, en la seccion SonarQube servers agre
 ```
 y guardar los cambios :heavy_check_mark:
 
-## Generación nuevo item en Jenkins
+## <a name="newitem"></a>Generación nuevo item en Jenkins
 
 En Jenkins->New Item
 Ingresar Nombre del nuevo item y seleccionar el tipo Pipeline
@@ -129,12 +133,12 @@ Lightweight checkout: checked
 ```
 y guardar los cambios :heavy_check_mark:
 
-## Codificación de Jenkinsfile con pipeline
+## <a name="pipeline"></a>Codificación de Jenkinsfile con pipeline
 
 En el pipeline se definen los stages que indican los pasos a seguir en la integración. Si falla uno, da FAILURE y no se continua con los siguientes.
 
-### Parametros
-Se escribe al comienzo del pipeline y especifica los parametros de entrada para la llamada desde jenkins
+### <a name="parametros"></a>Parámetros
+Se escribe al comienzo del pipeline y especifica los parámetros de entrada para la llamada desde jenkins
 Los valores por defecto deberian cambiar con cada proyecto
 
 Ejemplo:
@@ -148,7 +152,7 @@ parameters {
 	}
 ```
 
-### Stage SonarQube :satellite:
+### <a name="stagesonarqube"></a>Stage SonarQube :satellite:
 Dentro de este stage se configura la vinculación del proyecto de sonar con el server configurado en jenkins
 
 De esta forma los valores del ejemplo corresponden a:
@@ -177,7 +181,7 @@ steps {
 }
 ```
 
-### Stage Compilación :package:
+### <a name="stagecompilacion"></a>Stage Compilación :package:
 En este stage con el codigo bajado de Git, se genera para el BAR a deployar
 
 Se ejecuta la llamada a la imagen de broker oficial v11 [ibmcom/ace](https://hub.docker.com/r/ibmcom/ace/)
@@ -205,7 +209,7 @@ stage('Compilación')
 ```
 NOTA: Una vez que termina el stage compilación, el entorno generado con la llamada al docker de Ibm se cierra.
 
-### Stage Build Image :nut_and_bolt:
+### <a name="stagebuild"></a>Stage Build Image :nut_and_bolt:
 
 Lo primero que se debe hacer en este step es la carga de las variables de entorno, para que a la hora de armar la imagen, quede la misma con la configuración que corresponda al ambiente donde se requiere utilizarla.
 
@@ -245,7 +249,7 @@ SQLLOCAL.port=1433
 SQLLOCAL.dbname=SQLLOCAL
 ```
 
-### Lectura de archivos de properties
+### <a name="leeproperties"></a>Lectura de archivos de properties
 
 Para la lectura de los archivos de properties dentro del Jenkinsfile es necesario instalar un el plugin [Pipeline Utility Steps](https://wiki.jenkins.io/display/JENKINS/Pipeline+Utility+Steps+Plugin) dentro de Jenkins
 
@@ -287,7 +291,7 @@ Una vez invocada la función, a forma de referenciar las propiedades es la sigui
 ${properties.'SQLLOCAL.port'}
 ```
 
-### Modificacion odbc.ini
+### <a name="odbcini"></a>Modificacion odbc.ini
 
 Para la configuración de las conexiones es necesario modificar el odbc.ini de la imagen a generar.
 Para esto, cada proyecto debe contener dentro de la carpeta connections un odbc.ini preparado para realizar replace de las conexiones a utilizar
@@ -355,7 +359,7 @@ Luego del build se limpian los archivos temporales
 sh "rm /tmp/odbc.ini"
 sh "rm ${params.workspacesdir}/odbc.ini"
 ```
-### Dockerfile
+### <a name="dockerfile">Dockerfile
 El Dockerfile es sobre el que se realiza el build.
 En el mismo se indica que la contrucción de la imagen se realiza en base a la imagen [ppedraza/ace](https://hub.docker.com/r/ppedraza/ace/)
 
@@ -375,7 +379,7 @@ Al final del mismo luego de copiar el odbc.ini y el bar en sus directorios corre
 ```Dockerfile
 RUN bash -c 'mqsisetdbparms -w /home/aceuser/ace-server -n $dbname -u $dbuser -p $dbpass'
 ```
-### <a name="runimage"></a>Stage Run Image :runner:
+### <a name="stagerun"></a>Stage Run Image :runner:
 
 Antes de ejecutar el run se realiza una validación para ver si existe previamente un container con ese mismo nombre. En el caso de existir se stoppea y se elimina
 
@@ -399,7 +403,7 @@ steps{
 ```
 > Los puertos son parametrizados con la configuración seteada en el archivo de properties.
 
-### Stage Testing :see_no_evil:
+### <a name="stagetesting"></a>Stage Testing :see_no_evil:
 
 En este stage se corren test programados en SPOKE para corroborar el correcto funcionamiento de la imagen.
 
@@ -421,7 +425,7 @@ steps{
 }
 ```
 
-### Referencias para ejecutar SPOCK
+### <a name="referenciasspock"></a>Referencias para ejecutar SPOCK
 
 Es importante que dentro del root exista el archivo *build.gradle*
 El mismo contiene las dependencias necesarias para poder ejecutar el codigo en el archivo .groovy que contiene las validaciones.
@@ -454,7 +458,7 @@ sourceSets {
 
 
 
-### Stage Tag :pushpin:
+### <a name="stagetag"></a>Stage Tag :pushpin:
 
 Una vez que todos los pasos anteriores fueron exitosos, se procede a la generación del Tag de la imagen y la limpieza del entorno para una próxima corrida.
 
@@ -477,7 +481,7 @@ steps{
 	}
 ```
 
-En el código anterior lo primero que se hace es obtener el id del container que se corrió en el stage [run](#runimage).
+En el código anterior lo primero que se hace es obtener el id del container que se corrió en el stage [run](#stagerun).
 Con ese id, se genera el tagueo de la versión realizando un *commit*
 
 Una vez tagueado se stoppea la instancia y se borra la misma.
