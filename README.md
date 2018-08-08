@@ -136,6 +136,24 @@ y guardar los cambios :heavy_check_mark:
 
 En el pipeline se definen los stages que indican los pasos a seguir en la integración. Si falla uno, da FAILURE y no se continua con los siguientes.
 
+```Groovy
+#!/bin/bash
+
+pipeline {
+
+	agent any
+	stages {
+		stage('..'){
+		}
+		.
+		.
+		stage('..'){
+		}
+	}
+
+}
+```
+
 ### <a name="parametros"></a>Parámetros
 Se escribe al comienzo del pipeline y especifica los parámetros de entrada para la llamada desde jenkins
 Los valores por defecto deberian cambiar con cada proyecto
