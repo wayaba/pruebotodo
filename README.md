@@ -7,9 +7,9 @@
 ## Tabla de contenidos
 
 - [Prerrequisitos](#prerrequisitos)
-- [Pasos](#pasos)
-  * [Configuración de Sonarqube](#configsonar)
-  * [Configuración Sonarqube en Jenkins](#sonarjenkins)
+- [SonarQube](#sonarqube)
+  * [Configuración](#configsonar)
+  * [Configuración en Jenkins](#sonarjenkins)
 	* [Jenkins y server de SonarQube](#sonarjenkins1)
 	* [Plugin SonarQube](#sonarjenkins2)
   * [Generación nuevo item en Jenkins](#newitem)
@@ -51,9 +51,9 @@ Una vez que sonarqube este running, pegar el jar [(esql-plugin-2.3.3.jar)](https
 ```
 docker cp "C:\tmp\esql-plugin-2.3.3.jar" sonarqube:/opt/sonarqube/extensions/plugins
 ```
-# <a name="pasos"></a>Pasos :feet:
+## <a name="sonarqube"></a>SonarQube :feet:
 
-## <a name="configsonar"></a>Configuración de Sonarqube
+#### <a name="configsonar"></a>Configuración
 En SonarQube crear un nuevo proyecto
 Administration->Projects->Management->Create Project
 
@@ -78,9 +78,9 @@ En Generate Tokens ingresar la key del proyeto creado anteriormente "projSonarDo
 ```
 Token generado: 31ee76df78c1475c4b347aa0db46498a987c28ed
 ```
-## <a name="sonarjenkins"></a>Configuración Sonarqube en Jenkins
+#### <a name="sonarjenkins"></a>Configuración en Jenkins
 
-### <a name="sonarjenkins1">Configuración de plugin SonarQube
+	### <a name="sonarjenkins1">Configuración de plugin SonarQube
 
 Dentro de Manage Jenikins->Manage Plugins, buscar e instalar el plugin ["SonarQube Scanner"](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins)
 
@@ -95,7 +95,7 @@ Name : sonnar-jenkins
 
 y guardar los cambios :heavy_check_mark:
 
-### <a name="sonarjenkins2"> Configurar vinculo entre Jenkins y server de SonarQube
+	### <a name="sonarjenkins2"> Configurar vinculo entre Jenkins y server de SonarQube
 
 Dentro de Manage Jenkins->Configure System, en la seccion SonarQube servers agregar los datos del servidor (por ejemplo)
 - Environment variables
