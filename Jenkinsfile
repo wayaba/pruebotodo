@@ -47,10 +47,11 @@ pipeline {
 		stage('probando parametros'){
 			steps{
 				script{
-					def deployOptions = 'no\nyes'
+					LAST_TAG = sh (script: "docker images | grep elrepo/ace-mascotas | awk '{print $2}'",returnStdout: true).trim()
+					def deployOptions = ${LAST_TAG}
 					def userInput = input(
 					  id: 'userInput', message: 'Are you prepared to deploy?', parameters: [
-					  [$class: 'ChoiceParameterDefinition', choices: deployOptions, description: 'Approve/Disallow deployment', name: 'deploy-check']
+					  [$class: 'ChoiceParameterDefinition', defaultValue: deployOptions, description: 'Approve/Disallow deployment', name: 'deploy-check']
 					  ]
 					)
 					echo "you selected: ${userInput}"
