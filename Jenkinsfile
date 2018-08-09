@@ -55,7 +55,7 @@ pipeline {
 	stages {
 		stage('probando parametros'){
 			steps{
-				
+				echo "you selected: ${userInput}"
 			}
 		}
 	/*
