@@ -47,7 +47,7 @@ pipeline {
 		stage('probando parametros'){
 			steps{
 				script{
-					LAST_TAG = sh (script: "docker images | grep elrepo/ace-mascotas | awk '{print $2}'",returnStdout: true).trim()
+					LAST_TAG = sh (script: "docker images | grep elrepo/ace-mascotas | awk '{print \$2}'",returnStdout: true).trim()
 					def deployOptions = ${LAST_TAG}
 					def userInput = input(
 					  id: 'userInput', message: 'Are you prepared to deploy?', parameters: [
