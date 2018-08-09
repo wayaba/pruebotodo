@@ -52,7 +52,7 @@ pipeline {
 					def deployOptions = sh (script: "docker images | grep elrepo/ace-mascotas",returnStdout: true).trim()
 					def userInput = input(
 					  id: 'userInput', message: 'Are you prepared to deploy?', parameters: [
-					  [$class: 'ChoiceParameterDefinition', choices: deployOptions, description: 'Approve/Disallow deployment', name: 'deploy-check']
+					  [$class: 'ChoiceParameterDefinition', choices: deployOptions, description: deployOptions, name: 'deploy-check']
 					  ]
 					)
 					echo "you selected: ${userInput}"
