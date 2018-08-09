@@ -33,7 +33,7 @@ pipeline {
 		string(name: 'workspacesdir', defaultValue: '/var/jenkins_home/workspace/pruebotodo', description: '')
 		string(name: 'appname', defaultValue: 'ApiMascotas', description: '')
 		//string(name: 'version', defaultValue: '1.0', description: '1.0')
-		string(name: 'version', defaultValue: versionNumber, description: '1.0')
+		string(name: 'version', defaultValue: ${versionNumber}, description: '1.0')
 		choice(name: 'environment', choices: "desa\ntest\nprod", description: 'selecciona el ambiente' )
     }
 
