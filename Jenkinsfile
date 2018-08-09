@@ -15,14 +15,6 @@ def loadProperties(String env='tuvieja') {
 		properties = readProperties file: envFile
     }
 }
-
-def versionNumber = "44"
-
-/*
-def versionNumber(){
-	return "3"
-}
-*/
 				
 pipeline {
 
@@ -44,6 +36,7 @@ pipeline {
 	
 	
 	stages {
+	/*
 		stage('probando parametros'){
 			steps{
 				script{
@@ -59,7 +52,7 @@ pipeline {
 				}
 			}
 		}
-	/*
+		*/
 		stage('SonarQube analysis') {
 			steps {
 				script {
@@ -159,9 +152,23 @@ pipeline {
 							returnStdout: true
 						).trim()
 						echo "El id del container es: ${CONTAINER_ID}"
-						VERSION = params.version
-						echo "La nueva version es: ${VERSION}"
-						sh "docker commit ${CONTAINER_ID} elrepo/ace-mascotas:${VERSION}"
+						
+						//VERSION = params.version
+						//echo "La nueva version es: ${VERSION}"
+						//sh "docker commit ${CONTAINER_ID} elrepo/ace-mascotas:${VERSION}"
+						
+						def deployOptions = sh (script: "docker images | grep elrepo/ace-mascotas | awk '{print \$2}'",returnStdout: true).trim()
+						def versionnumber = input(
+								id: 'versionnumber', 
+								message: 'Que numero de version?', 
+								parameters: [[$class: 'StringParameterDefinition', 
+											defaultValue: '0.0', 
+											description: deployOptions, 
+											name: 'version']
+								]
+						)
+						echo "La nueva version es: ${versionnumber}"
+						sh "docker commit ${CONTAINER_ID} elrepo/ace-mascotas:${versionnumber}"
 						
 						echo 'Stoppeo la instancia'
 						sh 'docker stop app-running'
@@ -173,6 +180,5 @@ pipeline {
 					}	
 				}
 			}
-		*/
 	}
 }
