@@ -16,10 +16,13 @@ def loadProperties(String env='tuvieja') {
     }
 }
 
+def versionNumber = "44"
+
+/*
 def versionNumber(){
 	return "3"
 }
-
+*/
 pipeline {
 
 	agent any
