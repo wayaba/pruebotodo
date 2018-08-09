@@ -52,7 +52,7 @@ pipeline {
 					def deployOptions = sh (script: "docker images | grep elrepo/ace-mascotas | awk '{print \$2}'",returnStdout: true).trim()
 					def userInput = input(
 					  id: 'userInput', message: 'Are you prepared to deploy?', parameters: [
-					  [$class: 'ChoiceParameterDefinition', defaultValue: '0.0', description: deployOptions, name: 'version']
+					  [$class: 'StringParameterDefinition', defaultValue: '0.0', description: deployOptions, name: 'version']
 					  ]
 					)
 					echo "you selected: ${userInput}"
