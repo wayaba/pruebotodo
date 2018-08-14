@@ -186,13 +186,23 @@ pipeline {
 			{
 			
 				steps{
-						echo 'Ejecuto la validacion de SPOCK'
-						sh 'git tag'
-						//sh 'gradle resolveProperties'
-						//sh 'gradle -q callspock'
+					script{
+						
+						def oldtag = sh (script: "git tag",returnStdout: true).trim()
+						def tagnumber = input(
+								id: 'tagnumber', 
+								message: 'Que numero de tag?', 
+								parameters: [[$class: 'StringParameterDefinition', 
+											defaultValue: '0.0', 
+											description: oldtag, 
+											name: 'version']
+								]
+						)
+						echo "La nueva version es: ${tagnumber}"
+						//sh "docker commit ${CONTAINER_ID} elrepo/ace-mascotas:${tagnumber}"
 					}
 			
-				
+				}
 			}
 	}
 }
