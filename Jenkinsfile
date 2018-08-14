@@ -52,7 +52,7 @@ pipeline {
 			}
 		}
 		*/
-		/*
+		
 		stage('SonarQube analysis') {
 			steps {
 				script {
@@ -157,6 +157,7 @@ pipeline {
 						//echo "La nueva version es: ${VERSION}"
 						//sh "docker commit ${CONTAINER_ID} elrepo/ace-mascotas:${VERSION}"
 						
+						/*
 						def deployOptions = sh (script: "docker images | grep elrepo/ace-mascotas | awk '{print \$2}'",returnStdout: true).trim()
 						def versionnumber = input(
 								id: 'versionnumber', 
@@ -168,7 +169,33 @@ pipeline {
 								]
 						)
 						echo "La nueva version es: ${versionnumber}"
-						sh "docker commit ${CONTAINER_ID} elrepo/ace-mascotas:${versionnumber}"
+						*/
+						
+						def oldtag = sh (script: "git tag",returnStdout: true).trim()
+						def tagnumber = input(
+								id: 'tagnumber', 
+								message: 'Que numero de tag?', 
+								parameters: [[$class: 'StringParameterDefinition', 
+											defaultValue: '0.0', 
+											description: oldtag, 
+											name: 'version']
+								]
+						)
+						
+						def repo = sh (script: "git config --get remote.origin.url",returnStdout: true).trim()
+						echo "La nueva version es: ${tagnumber}"
+						echo "El repo es: ${repo}"
+						
+						repo = repo.replaceAll("https://", "")
+						echo "El repo es: ${repo}"
+						
+						withCredentials([usernamePassword(credentialsId: 'idGitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+							sh("git tag -a ${tagnumber} -m 'Jenkins'")
+							sh("git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repo} --tags")
+						}
+						
+						
+						sh "docker commit ${CONTAINER_ID} elrepo/ace-mascotas:${tagnumber}"
 						
 						echo 'Stoppeo la instancia'
 						sh 'docker stop app-running'
@@ -180,8 +207,8 @@ pipeline {
 					}	
 				}
 			}
-		*/
 		
+		/*
 		stage('Tag on git')
 			{
 			
@@ -203,8 +230,6 @@ pipeline {
 						echo "La nueva version es: ${tagnumber}"
 						echo "El repo es: ${repo}"
 						
-						//sh "git tag -a ${tagnumber} -m 'Tag from Jenkins'"
-						//sh "git push --tags"
 						repo = repo.replaceAll("https://", "")
 						echo "El repo es: ${repo}"
 						
@@ -217,5 +242,6 @@ pipeline {
 			
 				}
 			}
+			*/
 	}
 }
