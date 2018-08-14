@@ -190,7 +190,7 @@ pipeline {
 						echo "El repo es: ${repo}"
 						
 						withCredentials([usernamePassword(credentialsId: 'idGitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-							sh("git tag -a ${tagnumber} -m 'Jenkins'")
+							sh("git tag -a ${tagnumber} -m 'Tag de Jenkins'")
 							sh("git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repo} --tags")
 						}
 						
