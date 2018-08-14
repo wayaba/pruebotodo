@@ -200,7 +200,7 @@ pipeline {
 						)
 						echo "La nueva version es: ${tagnumber}"
 						//sh "git tag -a ${tagnumber} -m 'Tag from Jenkins'"
-						sh "git push origin master --tags"
+						sh "git push origin HEAD:master --tags"
 						
 
 					}
