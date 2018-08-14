@@ -199,7 +199,10 @@ pipeline {
 								]
 						)
 						echo "La nueva version es: ${tagnumber}"
-						//sh "docker commit ${CONTAINER_ID} elrepo/ace-mascotas:${tagnumber}"
+						sh "git tag -a ${tagnumber} -m 'Tag from Jenkins'"
+						sh "git origin master --tags"
+						
+
 					}
 			
 				}
