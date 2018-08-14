@@ -52,6 +52,7 @@ pipeline {
 			}
 		}
 		*/
+		/*
 		stage('SonarQube analysis') {
 			steps {
 				script {
@@ -178,6 +179,20 @@ pipeline {
 						sh (script: 'docker rmi image-temp')
 					}	
 				}
+			}
+		*/
+		
+		stage('Tag on git')
+			{
+			
+				steps{
+						echo 'Ejecuto la validacion de SPOCK'
+						sh 'git tag'
+						//sh 'gradle resolveProperties'
+						//sh 'gradle -q callspock'
+					}
+			
+				
 			}
 	}
 }
