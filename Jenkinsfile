@@ -198,12 +198,16 @@ pipeline {
 											name: 'version']
 								]
 						)
+						
+						def repo = sh (script: "git config --get remote.origin.url",returnStdout: true).trim()
 						echo "La nueva version es: ${tagnumber}"
+						echo "El repo es: ${repo}"
+						
 						//sh "git tag -a ${tagnumber} -m 'Tag from Jenkins'"
 						//sh "git push -u origin master --tags"
 						withCredentials([usernamePassword(credentialsId: 'idGitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
 							sh("git tag -a some_tag23 -m 'Jenkins'")
-							sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@<REPO> --tags')
+							sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repo} --tags')
 						}
 
 					}
