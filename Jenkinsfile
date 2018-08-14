@@ -206,7 +206,7 @@ pipeline {
 						//sh "git tag -a ${tagnumber} -m 'Tag from Jenkins'"
 						//sh "git push -u origin master --tags"
 						withCredentials([usernamePassword(credentialsId: 'idGitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-							sh("git tag -a some_tag23 -m 'Jenkins'")
+							sh("git tag -a ${tagnumber} -m 'Jenkins'")
 							sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repo} --tags')
 						}
 
