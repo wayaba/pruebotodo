@@ -207,12 +207,12 @@ pipeline {
 						//sh "git push --tags"
 						repo = repo.replaceAll("https://", "")
 						echo "El repo es: ${repo}"
-						/*
+						
 						withCredentials([usernamePassword(credentialsId: 'idGitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
 							sh("git tag -a ${tagnumber} -m 'Jenkins'")
-							sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/wayaba/pruebotodo.git --tags')
+							sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repo} --tags')
 						}
-*/
+
 					}
 			
 				}
