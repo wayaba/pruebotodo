@@ -203,14 +203,14 @@ pipeline {
 						echo "La nueva version es: ${tagnumber}"
 						echo "El repo es: ${repo}"
 						
-						sh "git tag -a ${tagnumber} -m 'Tag from Jenkins'"
-						sh "git push --tags"
-						/*
+						//sh "git tag -a ${tagnumber} -m 'Tag from Jenkins'"
+						//sh "git push --tags"
+						
 						withCredentials([usernamePassword(credentialsId: 'idGitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
 							sh("git tag -a ${tagnumber} -m 'Jenkins'")
-							sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@https://github.com/wayaba/pruebotodo.git --tags')
+							sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/wayaba/pruebotodo.git --tags')
 						}
-*/
+
 					}
 			
 				}
