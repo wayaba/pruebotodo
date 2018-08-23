@@ -5,7 +5,7 @@ import groovyx.net.http.RESTClient
 class MyFirstSpec extends Specification {
 	
 
-    RESTClient restClient = new RESTClient("http://192.168.99.100:7810")
+    RESTClient restClient = new RESTClient("http://172.17.0.2:7810")
 	
 	def 'hola'() {
 		println "Veo que onda"            

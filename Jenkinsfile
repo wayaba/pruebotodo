@@ -35,24 +35,7 @@ pipeline {
 	
 	
 	stages {
-	/*
-		stage('probando parametros'){
-			steps{
-				script{
-					//LAST_TAG = sh (script: "docker images | grep elrepo/ace-mascotas | awk '{print \$2}'",returnStdout: true).trim()
-					//LAST_TAG = sh (script: "docker images | grep elrepo/ace-mascotas",returnStdout: true).trim()
-					def deployOptions = sh (script: "docker images | grep elrepo/ace-mascotas | awk '{print \$2}'",returnStdout: true).trim()
-					def userInput = input(
-					  id: 'userInput', message: 'Are you prepared to deploy?', parameters: [
-					  [$class: 'StringParameterDefinition', defaultValue: '0.0', description: deployOptions, name: 'version']
-					  ]
-					)
-					echo "you selected: ${userInput}"
-				}
-			}
-		}
-		*/
-		
+		/*
 		stage('SonarQube analysis') {
 			steps {
 				script {
@@ -67,7 +50,8 @@ pipeline {
 					}
 				}
 			}
-		}		
+		}
+*/		
 		stage('Compilacion')
 		{
 			agent {
@@ -208,40 +192,6 @@ pipeline {
 				}
 			}
 		
-		/*
-		stage('Tag on git')
-			{
-			
-				steps{
-					script{
-						
-						def oldtag = sh (script: "git tag",returnStdout: true).trim()
-						def tagnumber = input(
-								id: 'tagnumber', 
-								message: 'Que numero de tag?', 
-								parameters: [[$class: 'StringParameterDefinition', 
-											defaultValue: '0.0', 
-											description: oldtag, 
-											name: 'version']
-								]
-						)
-						
-						def repo = sh (script: "git config --get remote.origin.url",returnStdout: true).trim()
-						echo "La nueva version es: ${tagnumber}"
-						echo "El repo es: ${repo}"
-						
-						repo = repo.replaceAll("https://", "")
-						echo "El repo es: ${repo}"
-						
-						withCredentials([usernamePassword(credentialsId: 'idGitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-							sh("git tag -a ${tagnumber} -m 'Jenkins'")
-							sh("git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repo} --tags")
-						}
-
-					}
-			
-				}
-			}
-			*/
+		
 	}
 }
