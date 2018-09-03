@@ -37,7 +37,7 @@ pipeline {
 	stages {
 		stage('Pruebo leer credenciales') {
 			steps {
-				withCredentials([[$class:'holacarola', credentialsId:'GITHUB', usernameVariable:'GIT_USER', passwordVariable:'GIT_PASS']])
+				withCredentials([[$class:'UsernamePasswordMultiBinding', credentialsId:'GITHUB', usernameVariable:'GIT_USER', passwordVariable:'GIT_PASS']])
 				sh 'Usuario: ${GIT_USER} .... Pass: ${GIT_PASS}'
 			}
 		}				
