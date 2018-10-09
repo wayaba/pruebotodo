@@ -112,7 +112,7 @@ pipeline {
 				sh "docker run -e LICENSE=accept -d -p ${properties.'API.manageport'}:7600 -p ${properties.'API.port'}:7800 -P --name app-running image-temp"
 			}
 		}
-		
+		/*
 		stage('Test')
 			{
 			
@@ -125,7 +125,7 @@ pipeline {
 			
 				
 			}
-			
+		*/	
 		stage('Tag image')
 			{
 				steps{
